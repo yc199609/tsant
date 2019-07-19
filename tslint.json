@@ -1,0 +1,26 @@
+{
+    "extends": [
+        "tslint-config-airbnb", 
+        "tslint-react", 
+        "tslint-react-hooks"
+    ],
+    "rules": {
+        "ordered-imports": false,
+        "interface-name" : [true, "never-prefix"],
+        "no-console": true,
+        "no-unused-expression": false,
+        "jsx-boolean-value": false,
+        "jsx-no-lambda": false,
+        "object-literal-sort-keys": false,
+        "react-hooks-nesting": "error"
+    },
+    "linterOptions": {
+        "exclude": [
+            "config/**/*.js",
+            "node_modules/**/*.ts",
+            "coverage/lcov-report/*.js",
+            "server/**/*.js"
+        ]
+    }
+}
+  
