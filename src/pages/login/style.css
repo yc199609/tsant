@@ -10,6 +10,13 @@
 .login-form-forgot {
     float: right;
 }
+.login-form-href{
+    color: #1890ff;
+}
+.login-form-href:hover {
+    text-decoration-line: underline;
+    cursor: pointer;
+}
 .login-form-button {
     width: 100%;
 }

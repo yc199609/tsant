@@ -1,5 +1,5 @@
 import React,{ SFC } from 'react'
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom'
 import { Form, Icon, Input, Button, Checkbox } from 'antd'
 import './style.css'
 
@@ -48,14 +48,14 @@ const Login:SFC<Iprops & RouteComponentProps> = (props) =>{
                             initialValue: true,
                         })(<Checkbox>Remember me</Checkbox>)
                     }
-                    <span className="login-form-forgot">
+                    <span className="login-form-forgot login-form-href">
                         Forgot password
                     </span>
                     <Button onClick={handleLogin} type="primary" htmlType="submit" className="login-form-button">
                         Log in
                     </Button>
                         Or
-                    <span>register now!</span>
+                    <span className="login-form-href"> Register now!</span>
                 </Form.Item>
             </Form>
         </div>

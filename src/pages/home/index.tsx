@@ -1,28 +1,10 @@
-import React, { useState } from 'react'
-import { ThemeContext } from './Context'
-import Toolbar from './Toolbar'
-import { Button } from 'antd'
+import React from 'react'
 
-const Home:React.FC = ()=>{
-    const [color, setColor] = useState('')
-    const [theme, setTheme] = useState('pink')
-    return(
+const Home: React.SFC =() => {
+    return (
         <div>
-            这是首页
-            <ThemeContext.Provider value={theme}>
-                <Toolbar/>
-            </ThemeContext.Provider>
-            <input
-                type="text" 
-                value={color}
-                onChange={(e)=>setColor(e.target.value)}
-            />
-            <Button
-                type="primary"
-                onClick={()=>setTheme(color)}
-            >确定</Button>
+            首页
         </div>
     )
 }
-
 export default Home
