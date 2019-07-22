@@ -1,30 +1,34 @@
-import React, { Suspense,useState, lazy } from 'react'
+import React, { useState, lazy, Suspense } from 'react'
 import { Layout, Menu, Icon } from 'antd'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { withRouter, Route, Switch, RouteComponentProps, Redirect  } from 'react-router-dom'
 import './style.css'
 
-const Home = lazy(()=> import('../home')) 
-const Employee = lazy(()=> import('../employee'))
+const Home = lazy(()=> import('../../pages/home')) 
+const Employee = lazy(()=> import('../../pages/employee'))
+
 const { Header, Sider, Content } = Layout
 
-const LayoutComponent:React.FC = ()=>{
+const Container:React.FC<RouteComponentProps> = ({match,history})=>{
     const [collapsed, setcollapsed] = useState(true)
     return(
         <Layout>
             <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="logo" />
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                    <Menu.Item key="1" className="menu-item">
-                        <Icon type="employee" />
-                        <Link to='/employee'>员工</Link>
+                <Menu
+                    theme="dark" 
+                    mode="inline" 
+                    defaultSelectedKeys={['1']}
+                    onClick={(item)=>{
+                        history.push(`${match.url}/${item.key}`)
+                    }}
+                >
+                    <Menu.Item key="home">
+                        <Icon type="home" />
+                        <span>首页</span>
                     </Menu.Item>
-                    <Menu.Item key="2">
-                        <Icon type="video-camera" />
-                        <span>nav 2</span>
-                    </Menu.Item>
-                    <Menu.Item key="3">
-                        <Icon type="upload" />
-                        <span>nav 3</span>
+                    <Menu.Item key="employee" className="menu-item">
+                        <Icon type="user" />
+                        <span>员工</span >
                     </Menu.Item>
                 </Menu>
             </Sider>
@@ -44,18 +48,17 @@ const LayoutComponent:React.FC = ()=>{
                         minHeight: 'calc(100vh - 112px)',
                     }}
                 >
-                   <Router>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Switch>
-                            <Route exact path="/" component={Home} />
-                            <Route  path='/employee' component={Employee}/>
+                            <Route path={`${match.url}/home`} component={Home} />
+                            <Redirect from={`${match.url}`} exact to={`${match.url}/home`} />
+                            <Route path={`${match.url}/employee`} component={Employee} />
                         </Switch>
                     </Suspense>
-                    </Router> 
                 </Content>
             </Layout>
       </Layout>
     )
 }
 
-export default LayoutComponent
+export default withRouter(Container) 

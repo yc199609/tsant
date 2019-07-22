@@ -1,14 +1,15 @@
 import React,{ Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-const LayoutComponent = lazy(()=> import('./pages/layout'))
+import { Redirect, BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import container from './components/container';
 const Login = lazy(()=> import('./pages/login'))
 
-const App: React.FC = () => {
+const App: React.SFC = () => {
   return (
     <Router>
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
-          <Route exact path="/" component={LayoutComponent} />
+          <Route path="/layout" component={container} />
+          <Redirect from="/" exact to="/layout" />
           <Route path="/login" component={Login} />
         </Switch>
       </Suspense>
