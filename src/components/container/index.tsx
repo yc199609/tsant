@@ -1,7 +1,7 @@
-import React, { useState, lazy, Suspense } from 'react'
-import { Layout, Menu, Icon } from 'antd'
+import React, { useState, lazy, Suspense, useContext } from 'react'
+import { Layout, Menu, Icon, Avatar } from 'antd'
 import { withRouter, Route, Switch, RouteComponentProps, Redirect  } from 'react-router-dom'
-import './style.css'
+import './style.scss'
 
 const Home = lazy(()=> import('../../pages/home')) 
 const Employee = lazy(()=> import('../../pages/employee'))
@@ -10,6 +10,7 @@ const { Header, Sider, Content } = Layout
 
 const Container:React.FC<RouteComponentProps> = ({match,history})=>{
     const [collapsed, setcollapsed] = useState(true)
+    // const {}
     return(
         <Layout>
             <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -22,7 +23,7 @@ const Container:React.FC<RouteComponentProps> = ({match,history})=>{
                         history.push(`${match.url}/${item.key}`)
                     }}
                 >
-                    <Menu.Item key="home">
+                    <Menu.Item key="home" className="menu-item">
                         <Icon type="home" />
                         <span>首页</span>
                     </Menu.Item>
@@ -33,12 +34,13 @@ const Container:React.FC<RouteComponentProps> = ({match,history})=>{
                 </Menu>
             </Sider>
             <Layout>
-                <Header style={{ background: '#fff', padding: 0 }}>
+                <Header className="header">
                     <Icon
                         className="trigger"
                         type={collapsed ? 'menu-unfold' : 'menu-fold'}
                         onClick={()=>setcollapsed(!collapsed)}
                     />
+                    <Avatar className="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                 </Header>
                 <Content
                     style={{
@@ -53,6 +55,7 @@ const Container:React.FC<RouteComponentProps> = ({match,history})=>{
                             <Route path={`${match.url}/home`} component={Home} />
                             <Redirect from={`${match.url}`} exact to={`${match.url}/home`} />
                             <Route path={`${match.url}/employee`} component={Employee} />
+                            <Redirect to='/404' />
                         </Switch>
                     </Suspense>
                 </Content>

@@ -1,0 +1,24 @@
+.form-box{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items:center; 
+    .login-form {
+        max-width: 300px;
+        .login-form-forgot {
+            float: right;
+        }
+        .login-form-href{
+            color: #1890ff;
+            &:hover{
+                text-decoration-line: underline;
+                cursor: pointer;
+            }
+        }
+        .login-form-button {
+            width: 100%;
+        }
+    }
+} 
+
+

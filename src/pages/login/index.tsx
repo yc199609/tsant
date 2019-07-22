@@ -1,7 +1,7 @@
 import React,{ SFC } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Form, Icon, Input, Button, Checkbox } from 'antd'
-import './style.css'
+import './style.scss'
 
 interface Iprops {
     form:any

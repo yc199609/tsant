@@ -1,0 +1,35 @@
+.logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px;
+}
+
+.menu-item{
+    margin: 0 !important;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 0;
+    .avatar{
+        box-sizing: content-box;
+        padding: 0 24px;
+    }
+    .trigger {
+        font-size: 18px;
+        line-height: 64px;
+        padding: 0 24px;
+        cursor: pointer;
+        transition: color 0.3s;
+        &:hover{
+            color: #1890ff;
+        }   
+    }
+}
+
+
+
+
