@@ -9,6 +9,9 @@ import { Layout } from 'antd'
 
 const Home = lazy(()=> import('../../pages/home')) 
 const Employee = lazy(()=> import('../../pages/employee'))
+const DeviceData = lazy(()=> import('../../pages/deviceData'))
+const Database = lazy(()=> import('../../pages/database'))
+const Task = lazy(()=> import('../../pages/task'))
 const { Content } = Layout
 
 const Container:React.FC<RouteComponentProps> = ({match,history,location})=>{
@@ -35,6 +38,9 @@ const Container:React.FC<RouteComponentProps> = ({match,history,location})=>{
                             <Route path={`${match.url}/home`} component={Home} />
                             <Redirect from={`${match.url}`} exact to={`${match.url}/home`} />
                             <Route path={`${match.url}/employee`} component={Employee} />
+                            <Route path={`${match.url}/deviceData`} component={DeviceData} />
+                            <Route path={`${match.url}/database`} component={Database} />
+                            <Route path={`${match.url}/task`} component={Task} />
                             <Redirect to='/404' />
                         </Switch>
                     </Suspense>

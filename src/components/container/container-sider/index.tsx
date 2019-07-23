@@ -25,6 +25,18 @@ const ContainerSider:React.SFC<RouteComponentProps> = ({match, history})=>{
                     <Icon type="user" />
                     <span>员工</span >
                 </Menu.Item>
+                <Menu.Item key="task" className="menu-item">
+                    <Icon type="exception" />
+                    <span>定制任务</span >
+                </Menu.Item>
+                <Menu.Item key="deviceData" className="menu-item">
+                    <Icon type="dashboard" />
+                    <span>设备数据</span >
+                </Menu.Item>
+                <Menu.Item key="database" className="menu-item">
+                    <Icon type="database" />
+                    <span>数据库管理</span >
+                </Menu.Item>
             </Menu>
         </Sider>
     )
