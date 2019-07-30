@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table } from 'antd'
+import { Table, Button, Icon } from 'antd'
 
 const dataSource = [
     {
@@ -18,19 +18,29 @@ const dataSource = [
   
 const columns = [
     {
-      title: '姓名',
+      title: '任务名称',
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: '年龄',
+      title: '定制时间',
       dataIndex: 'age',
       key: 'age',
     },
     {
-      title: '住址',
+      title: '状态',
       dataIndex: 'address',
       key: 'address',
+    },
+    {
+      title: '详情',
+      render: (text:string, record:object) =>(
+        <span>
+          <Button type='link'>
+            查看数据
+          </Button>
+        </span>
+      )
     }
 ]
 
@@ -38,20 +48,23 @@ const columns = [
 const Task:React.FC = () => {
     const [isloading,setloading] = useState(true)
     useEffect(()=>{
-        const getTableData = async() => {
-            return 
-        }
-        getTableData()
-            .then(res=>{
-                setloading(false)
-            })
+      const getTableData = async() => {
+        return 
+      }
+      getTableData()
+        .then(res=>{
+          setloading(false)
+        })
     })
     return (
+      <div>
         <div>
-            <div>定制任务</div>
-            <Table dataSource={dataSource} columns={columns} bordered loading={isloading}/>
+          <Button type="primary">
+            <Icon type="plus" /> 定制任务
+          </Button>
         </div>
-        
+        <Table dataSource={dataSource} columns={columns} bordered loading={isloading}/>
+      </div>  
     )
 }
 
