@@ -29,7 +29,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     response =>{
         const res = response.data
-        if(res.code !== 0){
+        if(res.status !== 0){
             message.error({
                 content:res.msg,
                 duration:3

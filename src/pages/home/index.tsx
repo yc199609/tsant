@@ -1,36 +1,51 @@
 import React from 'react'
-import Axios from 'axios'
 import { Button } from 'antd'
-import Cookie from 'js-cookie'
+import { Login } from 'api/user'
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
+import { StoreState } from 'store/count-model/types'
+import { decrement, increment } from 'store/count-model/actions'
 
-const request = Axios.create({
-    baseURL: "/",
-    headers:{
-        'Access-Control-Allow-Origin': '*',
-        'X-Requested-With': 'XMLHttpRequest'
-    }
-})
+interface IProps {
+    value:{
+        count:number
+    },
+    onIncrement: () => void,
+    onDecrement: () => void
+}
 
-const Home: React.SFC =() => {
-    const get =()=>{
-        request.get('api/get')
-            .then(res=>{
-                console.log(res)
-            })
-        Cookie.set('yc','dsd')
-    }
-    const post = () =>{
-        request.post('api/post')
-            .then(res=>{
-                console.log(res)
-            })
+const Home: React.SFC<IProps> =({ value, onIncrement, onDecrement }) => {
+    const handleLogin = ():void => {
+        Login({
+            name:'yc',
+            password:'123'
+        }).then(res=>{
+            console.log(res)
+        })
     }
     return (
         <div>
             首页
-            <Button onClick={get}>发送get请求</Button>
-            <Button onClick={post}>发送post请求</Button>
+            <Button onClick={handleLogin}>发送请求</Button>
+            <p> Clicked: { value.count } times</p>
+            <Button onClick={ onIncrement } style={{ marginRight: 20 }}> +  </Button>
+            <Button onClick={ onDecrement }> - </Button>
         </div>
     )
 }
-export default Home
+
+interface Istate {
+    count:number
+}
+
+const mapStateToProps = (state: StoreState): { value:Istate } => ({
+    value: state
+})
+
+// 将 对应action 插入到组件的 props 中
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    onDecrement: () => dispatch(decrement()),
+    onIncrement: () => dispatch(increment())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
