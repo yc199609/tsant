@@ -19,14 +19,14 @@ example:
 
 文档结构
 
- - src
-    |- store
-        |- count-model
-            |- actions.ts
-            |- consts.ts
-            |- reducers.ts
-            |- types.ts
-        |- index.ts
+src
+|- store
+    |- count-model
+        |- actions.ts
+        |- consts.ts
+        |- reducers.ts
+        |- types.ts
+    |- index.ts
 
 我们创建一个count 的状态用于记录鼠标点击的次数 
 
