@@ -1,6 +1,7 @@
 import React,{ SFC } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { Form, Icon, Input, Button, Checkbox } from 'antd'
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd'
+import { Login as LoginApi } from 'api/user'
 import './style.scss'
 
 interface Iprops {
@@ -10,15 +11,17 @@ interface Iprops {
 const Login:SFC<Iprops & RouteComponentProps> = (props) =>{
     const { form: { getFieldDecorator, getFieldsValue } } = props;
     const handleLogin = ()=>{
-        console.log(getFieldsValue())
-        props.history.push('/')
+        LoginApi(getFieldsValue())
+            .then(()=>{
+                message.success('登录成功',0.5,()=>{props.history.push('/')})
+            })
     }
     return (
         <div className="form-box">
             <Form className="login-form">
                 <Form.Item>
                     {
-                        getFieldDecorator('username', {
+                        getFieldDecorator('name', {
                             rules: [{ required: true, message: 'Please input your username!' }],
                         })(
                             <Input
@@ -61,6 +64,8 @@ const Login:SFC<Iprops & RouteComponentProps> = (props) =>{
         </div>
     )
 }
+
+
 
 const WrappedNormalLoginForm = Form.create()(Login)
 export default WrappedNormalLoginForm

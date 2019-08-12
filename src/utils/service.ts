@@ -30,21 +30,15 @@ service.interceptors.response.use(
     response =>{
         const res = response.data
         if(res.status !== 0){
-            message.error({
-                content:res.msg,
-                duration:3
-            })
+            message.error(res.message,2)
             return Promise.reject('error')
         } else {
             return res
         }
     },
     error => {
-        message.error({
-            content:error.message,
-            duration:3
-        })
-        return Promise.reject('error')
+        message.error(error.response.data.message,2)
+        return Promise.reject(error.response.data)
     }
 )
 
