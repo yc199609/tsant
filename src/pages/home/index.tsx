@@ -1,16 +1,19 @@
 import React from 'react'
 import { Button } from 'antd'
-import { Login } from 'api/user'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
+
+import { Login } from 'api/user'
 import { StoreState as CountStore } from 'store/count-model/types'
+import { StoreState as MenuStore } from 'store/menu-model/types'
 import { decrement, increment } from 'store/count-model/actions'
 import { setMenus } from 'store/menu-model/actions'
-import { StoreState as MenuStore } from 'store/menu-model/types'
+
+import { HomeEditForm } from './form'
 
 interface IProps {
     value:{
-        count:number,
+        count: number,
         menus: MenuStore['menus']
     },
     onIncrement: () => void,
@@ -35,6 +38,8 @@ const Home: React.SFC<IProps> =({ value, onIncrement, onDecrement, onSetMenus })
             <Button onClick={ onIncrement } style={{ marginRight: 20 }}> +  </Button>
             <Button onClick={ onDecrement }> - </Button>
             <Button onClick={ onSetMenus }>设置菜单</Button>
+            <HomeEditForm menus={ value.menus } />
+            
         </div>
     )
 }
@@ -49,8 +54,9 @@ const mapStateToProps = (state: StoreState): { value:StoreState } => ({
 
 const testArray =  [
     {
-        isComplete: true,
-        title:'yc测试'
+        name: '首页',
+        path:'/layout/home',
+        code: '1'
     }
 ]
 

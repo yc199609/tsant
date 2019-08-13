@@ -3,6 +3,7 @@ export type StoreState = {
 }
 
 export type menu = {
-    isComplete: boolean,
-    title: string
+    name: string,
+    path: string,
+    code: string
 }
