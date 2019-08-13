@@ -1,20 +1,20 @@
 import { combineReducers, createStore } from 'redux'
 import { count } from './count-model/reducers'
-import { menusReducer } from './menu-model/reducers'
+import { menus } from './menu-model/reducers'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 export const rootReducer = combineReducers({
     count,
-    menusReducer
+    menus
 })
   
 const persistConfig = {
     key: 'root',
     storage,
     // blacklist: ['count'],
-    // whitelist: ['navigation']
+    whitelist: ['menus']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

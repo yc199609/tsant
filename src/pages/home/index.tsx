@@ -11,7 +11,7 @@ import { StoreState as MenuStore } from 'store/menu-model/types'
 interface IProps {
     value:{
         count:number,
-        menusReducer: MenuStore['menus']
+        menus: MenuStore['menus']
     },
     onIncrement: () => void,
     onDecrement: () => void,
@@ -27,7 +27,6 @@ const Home: React.SFC<IProps> =({ value, onIncrement, onDecrement, onSetMenus })
             console.log(res)
         })
     }
-    console.log(value)
     return (
         <div>
             首页
@@ -39,17 +38,12 @@ const Home: React.SFC<IProps> =({ value, onIncrement, onDecrement, onSetMenus })
         </div>
     )
 }
+
 interface StoreState {
     count:CountStore['count'],
-    menusReducer:MenuStore['menus']
+    menus:MenuStore['menus']
 }
-
-interface Istate {
-    count:number,
-    menusReducer: MenuStore['menus']
-}
-
-const mapStateToProps = (state: StoreState): { value:Istate } => ({
+const mapStateToProps = (state: StoreState): { value:StoreState } => ({
     value: state
 })
 
@@ -64,7 +58,7 @@ const testArray =  [
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     onDecrement: () => dispatch(decrement()),
     onIncrement: () => dispatch(increment()),
-    onSetMenus: ()=> dispatch(setMenus(testArray))
+    onSetMenus: () => dispatch(setMenus(testArray))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
