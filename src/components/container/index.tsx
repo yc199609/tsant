@@ -1,25 +1,32 @@
 import React, { useState, lazy, Suspense } from 'react'
-import './style.scss'
+import { connect } from 'react-redux'
+import { Layout } from 'antd'
 import { withRouter, Route, Switch, RouteComponentProps, Redirect  } from 'react-router-dom'
 
 import ContainerHeader from './container-header'
 import ContainerSider from './container-sider'
 import { CollapsedContext } from './context'
-import { Layout } from 'antd'
+import { StoreState as MenuStore } from 'store/menu-model/types'
+import {AsyncRouter} from 'router'
 
-const Home = lazy(()=> import('../../pages/home')) 
-const Employee = lazy(()=> import('../../pages/employee'))
-const DeviceData = lazy(()=> import('../../pages/deviceData'))
-const Database = lazy(()=> import('../../pages/database'))
-const Task = lazy(()=> import('../../pages/task'))
+import './style.scss'
+
+const Home = lazy(()=> import('pages/home'))
 const { Content } = Layout
 
-const Container:React.FC<RouteComponentProps> = ({match,history,location})=>{
+interface IProps {
+    value: {
+        menus: MenuStore['menus']
+    }
+}
+
+const Container:React.FC<RouteComponentProps&IProps> = ({value,match,history,location})=>{
+    const { menus } = value
     const [collapsed, setcollapsed] = useState(true)
     return(
         <Layout>
             <CollapsedContext.Provider value={collapsed}>
-                <ContainerSider match={match} history={history} location={location} />
+                <ContainerSider match={match} history={history} location={location} menus={menus} />
             </CollapsedContext.Provider>
             <Layout>
                 <CollapsedContext.Provider value={collapsed}>
@@ -37,10 +44,13 @@ const Container:React.FC<RouteComponentProps> = ({match,history,location})=>{
                         <Switch>
                             <Route path={`${match.url}/home`} component={Home} />
                             <Redirect from={`${match.url}`} exact to={`${match.url}/home`} />
-                            <Route path={`${match.url}/employee`} component={Employee} />
-                            <Route path={`${match.url}/deviceData`} component={DeviceData} />
-                            <Route path={`${match.url}/database`} component={Database} />
-                            <Route path={`${match.url}/task`} component={Task} />
+                            {
+                                menus.map((item,index)=>{
+                                    return (
+                                        <Route key={index} path={`${item.path}`} component={AsyncRouter[item.code]} />
+                                    )
+                                })
+                            }
                             <Redirect to='/404' />
                         </Switch>
                     </Suspense>
@@ -50,4 +60,11 @@ const Container:React.FC<RouteComponentProps> = ({match,history,location})=>{
     )
 }
 
-export default withRouter(Container) 
+interface StoreState {
+    menus:MenuStore['menus']
+}
+const mapStateToProps = (state: StoreState): { value:StoreState } => ({
+    value: state
+})
+
+export default connect(mapStateToProps)(withRouter(Container)) 

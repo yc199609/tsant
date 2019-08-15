@@ -2,9 +2,14 @@ import React, { useContext } from 'react'
 import { Layout, Icon, Menu } from 'antd'
 import { CollapsedContext } from '../context'
 import { RouteComponentProps } from 'react-router-dom'
+import { StoreState as MenuStore } from 'store/menu-model/types'
 const { Sider } = Layout
 
-const ContainerSider:React.SFC<RouteComponentProps> = ({match, history})=>{
+interface IProps {
+    menus: MenuStore['menus']
+}
+
+const ContainerSider:React.SFC<RouteComponentProps&IProps> = ({match, history, menus})=>{
     const collapsed = useContext(CollapsedContext)
     return (
         <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -14,29 +19,23 @@ const ContainerSider:React.SFC<RouteComponentProps> = ({match, history})=>{
                 mode="inline" 
                 defaultSelectedKeys={['1']}
                 onClick={(item)=>{
-                    history.push(`${match.url}/${item.key}`)
+                    history.push(`${item.key}`)
                 }}
             >
-                <Menu.Item key="home" className="menu-item">
+                <Menu.Item key="/layout/home" className="menu-item">
                     <Icon type="home" />
                     <span>首页</span>
                 </Menu.Item>
-                <Menu.Item key="employee" className="menu-item">
-                    <Icon type="user" />
-                    <span>员工</span >
-                </Menu.Item>
-                <Menu.Item key="task" className="menu-item">
-                    <Icon type="exception" />
-                    <span>定制任务</span >
-                </Menu.Item>
-                <Menu.Item key="deviceData" className="menu-item">
-                    <Icon type="dashboard" />
-                    <span>设备数据</span >
-                </Menu.Item>
-                <Menu.Item key="database" className="menu-item">
-                    <Icon type="database" />
-                    <span>数据库管理</span >
-                </Menu.Item>
+                {
+                    menus.map(item=>{
+                        return (
+                            <Menu.Item key={item.path} className="menu-item">
+                                <Icon type="user" />
+                                <span>{item.name}</span >
+                            </Menu.Item>
+                        )
+                    })
+                }
             </Menu>
         </Sider>
     )

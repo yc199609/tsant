@@ -1,5 +1,5 @@
-import React from 'react'
-import { Button } from 'antd'
+import React, { useState } from 'react'
+import { Button, Table } from 'antd'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
@@ -9,7 +9,56 @@ import { StoreState as MenuStore } from 'store/menu-model/types'
 import { decrement, increment } from 'store/count-model/actions'
 import { setMenus } from 'store/menu-model/actions'
 
-import { HomeEditForm } from './form'
+import { Editable } from 'components/editable'
+
+
+const columns = [
+    {
+        key:'name',
+        title: '名称',
+        dataIndex: 'name',
+        editable: true
+    },
+    {
+        key:'path',
+        title: '路径',
+        dataIndex: 'path',
+        editable: true
+    },
+    {
+        key: 'code',
+        title: '代码',
+        dataIndex: 'code',
+        editable: true
+    }
+]
+
+const dataSource =  [
+    {
+        key: 0,
+        name: '员工',
+        path: '/layout/employee',
+        code: 'Employee'
+    },
+    {
+        key: 1,
+        name: '设备数据',
+        path: '/layout/deviceData',
+        code: 'DeviceData'
+    },
+    {
+        key: 2,
+        name: '数据库',
+        path: '/layout/database',
+        code: 'Database'
+    },
+    {
+        key: 3,
+        name: '任务',
+        path: '/layout/task',
+        code: 'Task'
+    }
+]
 
 interface IProps {
     value:{
@@ -18,10 +67,10 @@ interface IProps {
     },
     onIncrement: () => void,
     onDecrement: () => void,
-    onSetMenus: () => void
+    onSetMenus: (menus:MenuStore['menus']) => void
 }
-
 const Home: React.SFC<IProps> =({ value, onIncrement, onDecrement, onSetMenus }) => {
+    const [tableData, setTableData] = useState(dataSource)
     const handleLogin = ():void => {
         Login({
             name:'yc',
@@ -30,6 +79,17 @@ const Home: React.SFC<IProps> =({ value, onIncrement, onDecrement, onSetMenus })
             console.log(res)
         })
     }
+    const handleAddRouter = () => {
+
+        const newData = [...value.menus]
+        newData.push({
+            index: newData.length,
+            name: '',
+            path: newData.length.toString(),
+            code: '' 
+        })
+        onSetMenus(newData)
+    }
     return (
         <div>
             首页
@@ -37,9 +97,10 @@ const Home: React.SFC<IProps> =({ value, onIncrement, onDecrement, onSetMenus })
             <p> Clicked: { value.count } times</p>
             <Button onClick={ onIncrement } style={{ marginRight: 20 }}> +  </Button>
             <Button onClick={ onDecrement }> - </Button>
-            <Button onClick={ onSetMenus }>设置菜单</Button>
-            <HomeEditForm menus={ value.menus } />
-            
+    
+            <Button onClick={ handleAddRouter }>新增路由</Button>
+            <Editable columns={columns} dataSource={ value.menus } rowKey="index" />
+            {/* <Table columns={columns}  dataSource={ value.menus } rowKey="index"/> */}
         </div>
     )
 }
@@ -52,19 +113,11 @@ const mapStateToProps = (state: StoreState): { value:StoreState } => ({
     value: state
 })
 
-const testArray =  [
-    {
-        name: '首页',
-        path:'/layout/home',
-        code: '1'
-    }
-]
-
 // 将 对应action 插入到组件的 props 中
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     onDecrement: () => dispatch(decrement()),
     onIncrement: () => dispatch(increment()),
-    onSetMenus: () => dispatch(setMenus(testArray))
+    onSetMenus: (menus:MenuStore['menus']) => dispatch(setMenus(menus))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

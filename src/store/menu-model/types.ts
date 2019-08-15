@@ -3,6 +3,7 @@ export type StoreState = {
 }
 
 export type menu = {
+    index: number,
     name: string,
     path: string,
     code: string
