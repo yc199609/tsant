@@ -17,13 +17,12 @@ const components = {
 interface IProps extends FormComponentProps {
     rowKey: string,
     columns: Array<any>,
-    dataSource: MenuStore['menus']
+    dataSource: MenuStore['menus'],
+    setTableData:(menus:MenuStore['menus'])=> void
 }
 
-const Etable:React.FC<IProps> = ({rowKey,dataSource,form,columns}) => {
+const Etable:React.FC<IProps> = ({rowKey,dataSource,form,columns,setTableData}) => {
     const [editKey, setEditKey] = useState<string|number>('')
-    const [tableData, setTableData] = useState(dataSource)
-    // setTableData(dataSource)
 
     let tableColumns = [...columns]
     tableColumns.push({
@@ -72,7 +71,7 @@ const Etable:React.FC<IProps> = ({rowKey,dataSource,form,columns}) => {
     const isEditing = (record:recordType) => record.index === editKey
 
     const delRow = (key:number) => {
-        const newData = [...tableData]
+        const newData = [...dataSource]
         const index = newData.findIndex(item => key === item.index)
         if(index > -1){
             newData.splice(index, 1)
@@ -86,7 +85,7 @@ const Etable:React.FC<IProps> = ({rowKey,dataSource,form,columns}) => {
             if(error){
                 return
             }
-            const newData = [...tableData]
+            const newData = [...dataSource]
             const index = newData.findIndex(item=> key === item.index)
             if(index > -1){
                 const item = newData[index]
@@ -107,10 +106,10 @@ const Etable:React.FC<IProps> = ({rowKey,dataSource,form,columns}) => {
     return (
         <EditableContext.Provider value={form}>
             <Table
-                components={components}
-                dataSource={tableData}
-                columns={tableColumns}
-                rowKey={rowKey}
+                components={ components }
+                dataSource={ dataSource }
+                columns={ tableColumns }
+                rowKey={ rowKey }
                 bordered
             />
         </EditableContext.Provider>

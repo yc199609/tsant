@@ -35,7 +35,7 @@ export const EditableCell:SFC<FormComponentProps&IProps> = (props) => {
         return <Input />
     }
     return (
-        <td {...restProps}>
+        <td {...restProps} >
             {
                 editing?(
                     <Form.Item>

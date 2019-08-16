@@ -1,6 +1,6 @@
 import React,{ Suspense, lazy } from 'react';
 import { Redirect, BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import container from './components/container';
+import container from './layout/container';
 const Login = lazy(()=> import('./pages/login'))
 const Err404 = lazy(()=> import('./pages/error/404'))
 

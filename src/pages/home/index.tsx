@@ -1,16 +1,14 @@
-import React, { useState } from 'react'
-import { Button, Table } from 'antd'
+import React, { useState  } from 'react'
+import { Button } from 'antd'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { Login } from 'api/user'
 import { StoreState as CountStore } from 'store/count-model/types'
 import { StoreState as MenuStore } from 'store/menu-model/types'
 import { decrement, increment } from 'store/count-model/actions'
 import { setMenus } from 'store/menu-model/actions'
 
 import { Editable } from 'components/editable'
-
 
 const columns = [
     {
@@ -33,33 +31,6 @@ const columns = [
     }
 ]
 
-const dataSource =  [
-    {
-        key: 0,
-        name: '员工',
-        path: '/layout/employee',
-        code: 'Employee'
-    },
-    {
-        key: 1,
-        name: '设备数据',
-        path: '/layout/deviceData',
-        code: 'DeviceData'
-    },
-    {
-        key: 2,
-        name: '数据库',
-        path: '/layout/database',
-        code: 'Database'
-    },
-    {
-        key: 3,
-        name: '任务',
-        path: '/layout/task',
-        code: 'Task'
-    }
-]
-
 interface IProps {
     value:{
         count: number,
@@ -70,37 +41,29 @@ interface IProps {
     onSetMenus: (menus:MenuStore['menus']) => void
 }
 const Home: React.SFC<IProps> =({ value, onIncrement, onDecrement, onSetMenus }) => {
-    const [tableData, setTableData] = useState(dataSource)
-    const handleLogin = ():void => {
-        Login({
-            name:'yc',
-            password:'123'
-        }).then(res=>{
-            console.log(res)
-        })
-    }
+    const [menus,setMenus] = useState([...value.menus])
     const handleAddRouter = () => {
-
-        const newData = [...value.menus]
+        const newData = [...menus]
         newData.push({
             index: newData.length,
             name: '',
             path: newData.length.toString(),
             code: '' 
         })
-        onSetMenus(newData)
+        setMenus(newData)
+    }
+    const submit = () => {
+        onSetMenus(menus)
     }
     return (
         <div>
             首页
-            <Button onClick={handleLogin}>发送请求</Button>
             <p> Clicked: { value.count } times</p>
             <Button onClick={ onIncrement } style={{ marginRight: 20 }}> +  </Button>
             <Button onClick={ onDecrement }> - </Button>
-    
             <Button onClick={ handleAddRouter }>新增路由</Button>
-            <Editable columns={columns} dataSource={ value.menus } rowKey="index" />
-            {/* <Table columns={columns}  dataSource={ value.menus } rowKey="index"/> */}
+            <Editable columns={columns} dataSource={ menus } rowKey="index" setTableData={setMenus} />
+            <Button onClick={submit}>确定</Button>
         </div>
     )
 }

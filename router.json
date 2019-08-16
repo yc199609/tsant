@@ -1,0 +1,26 @@
+[
+    {
+        "key": 0,
+        "name": "员工",
+        "path": "/layout/employee",
+        "code": "Employee"
+    },
+    {
+        "key": 1,
+        "name": "设备数据",
+        "path": "/layout/deviceData",
+        "code": "DeviceData"
+    },
+    {
+        "key": 2,
+        "name": "数据库",
+        "path": "/layout/database",
+        "code": "Database"
+    },
+    {
+        "key": 3,
+        "name": "任务",
+        "path": "/layout/task",
+        "code": "Task"
+    }
+]
