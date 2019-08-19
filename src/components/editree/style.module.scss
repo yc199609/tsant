@@ -1,0 +1,17 @@
+.text{
+    height: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.title{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    span{
+        line-height: 24px;
+    }
+    button{
+        height: 24px;
+    }
+}

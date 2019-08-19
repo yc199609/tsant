@@ -1,5 +1,5 @@
 import React,{ useState } from 'react'
-import { Table, Button, Form, Popconfirm  } from 'antd'
+import { Table, Button, Form, Popconfirm } from 'antd'
 import { FormComponentProps } from 'antd/es/form'
 
 import { EditableCell } from './editableCell'

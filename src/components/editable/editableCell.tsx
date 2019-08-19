@@ -1,7 +1,7 @@
 import React, { SFC, useContext } from 'react'
 import Form, { FormComponentProps } from 'antd/es/form'
+import { InputNumber, Input } from 'antd'
 import { EditableContext } from './editableContext'
-import { InputNumber, Input } from 'antd';
 
 interface IProps {
     record: {
@@ -9,10 +9,10 @@ interface IProps {
         path: string,
         code: string
     },
-    editing:boolean,
+    editing: boolean,
     title: string,
     inputType: string,
-    dataIndex:'name'|'path'|'code'|undefined,
+    dataIndex: 'name' | 'path' | 'code' | undefined,
     render?: () => JSX.Element
 }
 
