@@ -1,3 +1,5 @@
+import { dataType } from './consts'
+
 interface editKeyAction {
     type?: string
     key: string
@@ -14,13 +16,15 @@ export const editKeyReducer = (state:string,action:editKeyAction) => {
 
 interface dataAction {
     type?: string
-    data: Array<any>
+    data: dataType
 }
 
-export const dataReducer = (state:Array<any>,action:dataAction) => {
+export const dataReducer = (state:dataType,action:dataAction) => {
+    // console.log(action)
     switch (action.type) {
         case "setdata":
-            return action.data
+            state = action.data
+            return state
         default:
             return state
     }
