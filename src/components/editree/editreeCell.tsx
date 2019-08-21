@@ -1,53 +1,27 @@
-import React, { SFC, useContext, Children } from 'react'
-import Form, { FormComponentProps } from 'antd/es/form'
-import { InputNumber, Input, Tree, Button } from 'antd'
-import { EditableContext } from './editableContext'
+import React from 'react'
+import { FormComponentProps } from 'antd/es/form'
+import { Tree } from 'antd'
+import { dataType } from './consts'
+import { EditreeTitle } from './editreeTitle'
 
 const { TreeNode } = Tree
 
 interface IProps {
-    title: string,
-    key: string,
-    dataRef: {
-        title: string,
-        opration?:Array<string>
-    }
+    editData:dataType,
+    form:FormComponentProps['form']
 }
 
-export const EditreeCell:SFC<IProps> = (props) => {
-    const form = useContext(EditableContext)
-    return(
-        <>
-            <TreeNode key={props.key} title={
-                renderTitle(props.dataRef)
-            }>
-                {props.children}
-            </TreeNode>
-        </>
-    )
-}
-
-interface IData {
-    title: string,
-    operation?: Array<string>
-}
-
-const renderTitle = (data:IData) => {
-    return (
-        <div>
-            <span>{data.title}</span>
-            {
-                data.operation?(
-                    <span>
-                        {
-                            data.operation.includes('edit')?(<Button>编辑</Button>):null
-                        }
-                        {
-                            data.operation.includes('delete')?(<Button>删除</Button>):null
-                        }
-                    </span>
-                ):null
-            }
-        </div>
-    )
+export const EditreeCell = (props:IProps) => {
+    return props.editData.map((item)=> {           
+        if(item.children) {
+            return (
+                <TreeNode title={<EditreeTitle data={ item } form={ props.form } />} key={ item.key } >
+                    {
+                        EditreeCell({editData:item.children, form:props.form})
+                    }
+                </TreeNode>
+            )
+        }
+        return <TreeNode title={<EditreeTitle data={ item } form={ props.form } />} key={ item.key } />
+    })
 }

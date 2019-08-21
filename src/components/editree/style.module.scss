@@ -15,3 +15,18 @@
         height: 24px;
     }
 }
+.formItem{
+    margin: 0;
+    line-height: 24px;
+    height: 24px;
+    :global{
+        .ant-form-item-control{
+            line-height: normal;
+        }
+    }
+    
+}
+
+.input{
+    height: 24px;
+}

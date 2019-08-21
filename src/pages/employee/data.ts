@@ -1,4 +1,6 @@
-export default [
+import { dataType } from '../../components/editree/consts'
+
+const data:dataType = [
     {
         key: '1',
         title: '根节点',
@@ -36,3 +38,5 @@ export default [
         ]
     }
 ]
+
+export default data
