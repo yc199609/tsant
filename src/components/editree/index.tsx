@@ -1,24 +1,13 @@
-import React, { useReducer } from 'react'
-import { Tree, Form} from 'antd'
-import { FormComponentProps } from 'antd/es/form'
-import { EditableContext } from './editableContext'
-import { EditreeCell } from './editreeCell'
-import data1 from './data'
-import { editKeyReducer, dataReducer } from './reducer'
+import React from 'react'
+import RootTree from './rootTree'
+import { EditProvider } from './store/provider'
 
-const Editree:React.SFC<FormComponentProps> = ({form}) => {
-    const editKey = useReducer(editKeyReducer,'')
-    const data = useReducer(dataReducer,data1)
-    const [treedata, datadispath] = data
+const Editree:React.SFC = () => {
     return (
-        <EditableContext.Provider value={{ form, editKey, data }}>
-            <Tree showLine blockNode >
-                {
-                    EditreeCell({data:treedata,form})
-                }
-            </Tree>
-        </EditableContext.Provider>
+        <EditProvider>
+            <RootTree/>
+        </EditProvider>
     )
 }
 
-export default Form.create()(Editree)
+export default Editree
