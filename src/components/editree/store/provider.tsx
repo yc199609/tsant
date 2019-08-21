@@ -1,11 +1,14 @@
 import React, { useReducer, useContext } from 'react'
-import data1 from './data'
 import { dataValueReducer,editKeyReducer } from './reducer'
 
 const EditreeContext = React.createContext<any>({});
 
-export const EditProvider:React.SFC = ({children}) => {
-    const contextData = useReducer(dataValueReducer,data1)
+interface IProps {
+    data:Array<any>
+}
+
+export const EditProvider:React.SFC<IProps> = ({children,data}) => {
+    const contextData = useReducer(dataValueReducer,data)
     const contextEditKey = useReducer(editKeyReducer,'')
     return (
         <EditreeContext.Provider value={{contextData,contextEditKey}}>

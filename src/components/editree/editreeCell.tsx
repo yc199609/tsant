@@ -15,13 +15,13 @@ export const EditreeCell = (props:IProps) => {
     return props.editData.map((item)=> {           
         if(item.children) {
             return (
-                <TreeNode title={<EditreeTitle data={item} form={props.form} />} key={ item.key } >
+                <TreeNode title={<EditreeTitle data={ item } form={ props.form } />} key={ item.key } >
                     {
-                        EditreeCell({editData:item.children,form:props.form})
+                        EditreeCell({editData:item.children, form:props.form})
                     }
                 </TreeNode>
             )
         }
-        return <TreeNode title={<EditreeTitle data={item} form={props.form} />} key={ item.key } />
+        return <TreeNode title={<EditreeTitle data={ item } form={ props.form } />} key={ item.key } />
     })
 }

@@ -2,9 +2,13 @@ import React from 'react'
 import RootTree from './rootTree'
 import { EditProvider } from './store/provider'
 
-const Editree:React.SFC = () => {
+interface IProps {
+    data:Array<any>
+}
+
+const Editree:React.SFC<IProps> = (props) => {
     return (
-        <EditProvider>
+        <EditProvider data={props.data}>
             <RootTree/>
         </EditProvider>
     )

@@ -19,7 +19,8 @@ export const EditreeTitle:React.FC<IProps> = (props) => {
     const handleEdit:handleEditType = (key) => { keydispath(key) }
     const handleSave = (data:itemType) => {
         const resetTitle:resetTitleType = (props) => {
-            props.data.forEach((item) => {
+            const data = [...props.data]
+            data.forEach((item) => {
                 if(item.children) {
                     resetTitle({title:props.title, key:props.key, data:item.children})
                 }
@@ -27,13 +28,15 @@ export const EditreeTitle:React.FC<IProps> = (props) => {
                     item.title = props.title
                 }
             })
-            return props.data
+            return data
         }
-        resetTitle({
+        
+        const res = resetTitle({
             title:props.form.getFieldsValue()[data.key],
             key:data.key,
             data:editData
         })
+        datadispath(res)
         keydispath('')
     }
     const handleDelete = (obj:itemType) => {

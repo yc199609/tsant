@@ -1,4 +1,4 @@
-import { dataType } from '../consts'
+import { dataType } from '../../components/editree/consts'
 
 const data:dataType = [
     {
